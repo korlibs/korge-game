@@ -7,7 +7,7 @@ import korlibs.korge.game.*
 import korlibs.korge.view.*
 import korlibs.math.geom.*
 
-class RectRenderer(rect: Rectangle) : Renderer() {
+class RectRenderer(rect: Rectangle) : GameRenderer() {
     var rect = rect
 
     override fun render(ctx: RenderContext) {

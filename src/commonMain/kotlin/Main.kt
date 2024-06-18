@@ -1,5 +1,3 @@
-import korlibs.image.bitmap.*
-import korlibs.image.color.*
 import korlibs.korge.*
 import korlibs.korge.game.*
 import korlibs.korge.render.*
@@ -8,9 +6,13 @@ import korlibs.korge.view.*
 import korlibs.math.geom.*
 
 suspend fun main() = Korge {
+    val composable = composable(10) {
+    }
+    composable.state = 20
     sceneContainer().changeTo({ MainMyModuleScene() })
 }
 
+// @TODO: Mouse pick is a raytrace from camera positions
 class MainMyModuleScene : GameScene() {
     override suspend fun main(root: GameRoot) {
         val obj = root.create()
@@ -35,5 +37,11 @@ class MainMyModuleScene : GameScene() {
                 }
             }
         })
+    }
+}
+
+class MyComposableScene(state: Int) : ComposableScene<Int>(10) {
+    // @Composable
+    override fun main(state: Int) {
     }
 }

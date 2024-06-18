@@ -4,7 +4,7 @@ import korlibs.datastructure.*
 import korlibs.math.geom.*
 
 // @TODO: Also do 3D transform
-class Transform : Component() {
+class Transform : GameComponent() {
     var version = 0
     var parent: Transform? = null
         set(value) {
@@ -16,29 +16,35 @@ class Transform : Component() {
     private val _children = fastArrayListOf<Transform>()
     val children: List<Transform> get() = _children
 
+    // @TODO: Auto-computed based on what we are setting
+    var has3D: Boolean = false
+
     var localMatrix2D = Matrix()
         set(value) {
             field = value
             invalidate()
         }
 
+    // @TODO: Cache and improve performance of these
     var matTransform
         get() = localMatrix2D.toTransform()
         set(value) {
             localMatrix2D = value.toMatrix()
         }
 
+    // @TODO: Cache and improve performance of these
     var x: Double
         get() = matTransform.x
         set(value) {
             matTransform = matTransform.copy(x = value)
         }
+    // @TODO: Cache and improve performance of these
     var y: Double
         get() = matTransform.y
         set(value) {
             matTransform = matTransform.copy(y = value)
         }
-
+    // @TODO: Cache and improve performance of these
     var xy: Point
         get() = Point(matTransform.x, matTransform.y)
         set(value) {

@@ -2,7 +2,7 @@ package korlibs.korge.game
 
 import korlibs.time.*
 
-open class Behaviour : Component() {
+open class Behaviour : GameComponent() {
     var enabled: Boolean = true
 
     open fun update(delta: FastDuration) { }

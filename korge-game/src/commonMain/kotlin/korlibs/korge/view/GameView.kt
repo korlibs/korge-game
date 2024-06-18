@@ -12,7 +12,7 @@ class GameView(context: CoroutineContext) : View() {
     }
 
     override fun renderInternal(ctx: RenderContext) {
-        Renderer.render(gameRoot, ctx)
+        GameRenderer.render(gameRoot, ctx)
     }
 
     init {

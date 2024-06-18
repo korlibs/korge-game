@@ -1,6 +1,6 @@
 package korlibs.korge.game
 
-open class Component {
+open class GameComponent {
     internal var _obj: GameObject? = null
     val obj: GameObject get() = _obj!!
 
@@ -13,11 +13,11 @@ open class Component {
     }
 }
 
-fun <T : Component> T.attach(obj: GameObject): T {
+fun <T : GameComponent> T.attach(obj: GameObject): T {
     obj.attach(this)
     return this
 }
-fun <T : Component> T.detach(): T {
+fun <T : GameComponent> T.detach(): T {
     _obj?.detach(this)
     return this
 }
