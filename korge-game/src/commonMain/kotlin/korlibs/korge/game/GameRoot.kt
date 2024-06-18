@@ -9,7 +9,10 @@ class GameRoot(val coroutineContext: CoroutineContext) : Extra by Extra.Mixin() 
     internal val objs = fastArrayListOf<GameObject>()
     //val components = LinkedHashMap<KClass<*>, FastArrayList<Any>>()
 
-    fun create(): GameObject = GameObject(this)
+    fun create(): GameObject = GameObject().also {
+        it.root = this
+        objs += it
+    }
     fun destroy(obj: GameObject) {
         objs -= obj
         obj.reset()

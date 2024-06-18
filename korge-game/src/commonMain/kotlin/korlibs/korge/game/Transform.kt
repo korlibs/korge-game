@@ -2,10 +2,14 @@ package korlibs.korge.game
 
 import korlibs.datastructure.*
 import korlibs.math.geom.*
+import kotlinx.serialization.*
 
 // @TODO: Also do 3D transform
+@Serializable
 class Transform : GameComponent() {
-    var version = 0
+    @Transient
+    protected var version = 0
+    @Transient
     var parent: Transform? = null
         set(value) {
             parent?._children?.remove(this)
@@ -13,12 +17,16 @@ class Transform : GameComponent() {
             parent?._children?.add(this)
             version++
         }
+    @Transient
     private val _children = fastArrayListOf<Transform>()
+    @Transient
     val children: List<Transform> get() = _children
 
     // @TODO: Auto-computed based on what we are setting
+    @Transient
     var has3D: Boolean = false
 
+    @Transient
     var localMatrix2D = Matrix()
         set(value) {
             field = value
@@ -26,6 +34,7 @@ class Transform : GameComponent() {
         }
 
     // @TODO: Cache and improve performance of these
+    @Transient
     var matTransform
         get() = localMatrix2D.toTransform()
         set(value) {
@@ -33,26 +42,32 @@ class Transform : GameComponent() {
         }
 
     // @TODO: Cache and improve performance of these
+    @Transient
     var x: Double
         get() = matTransform.x
         set(value) {
             matTransform = matTransform.copy(x = value)
         }
     // @TODO: Cache and improve performance of these
+    @Transient
     var y: Double
         get() = matTransform.y
         set(value) {
             matTransform = matTransform.copy(y = value)
         }
     // @TODO: Cache and improve performance of these
+    @Transient
     var xy: Point
         get() = Point(matTransform.x, matTransform.y)
         set(value) {
             matTransform = matTransform.copy(x = value.x, y = value.y)
         }
 
+    @Transient
     private var _globalMatrix2DVersion: Int = -1
+    @Transient
     private var _globalMatrix2D: Matrix = Matrix()
+    @Transient
     val globalMatrix2D: Matrix get() {
         if (_globalMatrix2DVersion != version) {
             _globalMatrix2DVersion = version

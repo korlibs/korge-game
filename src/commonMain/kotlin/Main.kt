@@ -5,8 +5,22 @@ import korlibs.korge.render.*
 import korlibs.korge.scene.*
 import korlibs.korge.view.*
 import korlibs.math.geom.*
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
 
 suspend fun main() = Korge {
+    val str = Json.encodeToString(Demo().also {
+        it.a = 20
+        //it.tag = "hello"
+    })
+    println(str)
+    println(Json.decodeFromString<Demo>(str))
+
+    //val root = GameRoot(coroutineContext)
+    //val obj = root.create()
+    //obj.attach(Demo().also { it.a = 20 })
+    //println(Json.encodeToString(obj))
+
     //val composable = composable(10) {}
     //composable.state = 20
     //onEvent(ScoreUpdated) {
@@ -14,6 +28,16 @@ suspend fun main() = Korge {
     //}
     //views.dispatch(ScoreUpdated(20))
     sceneContainer().changeTo({ MainMyModuleScene() })
+}
+
+@Serializable
+@SerialName("demo")
+class Demo : GameComponent() {
+    //override val componentName = "Demo"
+
+    var a = 10
+
+    override fun toString(): String = "Demo(a=$a)"
 }
 
 class ScoreUpdated(val score: Int) : Event(), TEvent<ScoreUpdated> {

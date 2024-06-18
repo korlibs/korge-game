@@ -2,3 +2,4 @@ plugins:
 #- serialization
 dependencies:
 - "maven::common::com.soywiz.korlibs.korge2:korge"
+- "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0"

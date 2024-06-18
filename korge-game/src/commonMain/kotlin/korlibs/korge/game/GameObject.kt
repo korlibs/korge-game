@@ -1,19 +1,22 @@
 package korlibs.korge.game
 
 import korlibs.datastructure.*
+import kotlinx.serialization.*
 import kotlin.reflect.*
 
 // @TODO: Tree should be construct at GameObject level or keep it in Transform
-class GameObject internal constructor(val root: GameRoot) : Extra {
+@Serializable
+class GameObject internal constructor() : Extra {
+    @Transient
+    lateinit var root: GameRoot
+
     var name: String? = null
     var tag: String? = null
+    @Transient
     override var extra: ExtraType = ExtraType()
-    private val components = fastArrayListOf<GameComponent>()
+    private val components = arrayListOf<GameComponent>()
+    @Transient
     val transform = Transform().attach(this)
-
-    init {
-        root.objs += this
-    }
 
     fun attach(component: GameComponent) {
         component.detach()
