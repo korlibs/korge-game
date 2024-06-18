@@ -19,7 +19,8 @@ abstract class Actor : Behaviour() {
     }
 
     /** Changes the current action to [block]. For example `change(::right)` suspend fun right() { ... } */
-    fun change(block: suspend () -> Unit) {
+    suspend fun change(block: suspend () -> Unit, waitFrame: Boolean = true) {
+        if (waitFrame) frame()
         throw ChangeAction(block)
     }
 

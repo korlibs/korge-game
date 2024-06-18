@@ -41,6 +41,14 @@ class Transform : GameComponent() {
             localMatrix2D = value.toMatrix()
         }
 
+    fun advance(delta: Double) {
+        xy += Point.polar(matTransform.rotation, delta)
+    }
+
+    var rotation2D: Angle
+        get() = matTransform.rotation
+        set(value) { matTransform = matTransform.copy(rotation = value) }
+
     // @TODO: Cache and improve performance of these
     @Transient
     var x: Double

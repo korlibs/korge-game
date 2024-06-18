@@ -50,24 +50,27 @@ class MainMyModuleScene : GameScene() {
     override suspend fun main(root: GameRoot) {
         val obj = root.create()
         obj.attach(RectRenderer(Rectangle(0, 0, 100, 100)))
-        obj.transform.localMatrix2D = Matrix().translated(20, 20)
+        obj.transform.localMatrix2D = Matrix().translated(20, 20).rotated(45.degrees)
         obj.attach(object : Actor() {
             override suspend fun main() {
-                change(::right)
+                change(::followMouse)
             }
-            suspend fun right() {
+            suspend fun followMouse() {
                 while (true) {
-                    if (obj.x >= 20) change(::left)
-                    obj.x++
+                    obj.transform.rotation2D = Angle.between(obj.xy, views.globalMousePos)
+                    if (obj.xy.distanceTo(views.globalMousePos) <= 4) change(::fleeMouse)
+                    obj.transform.advance(2.0)
                     frame()
                 }
             }
-            suspend fun left() {
+            suspend fun fleeMouse() {
                 while (true) {
-                    if (obj.x <= 0) change(::right)
-                    obj.x--
+                    obj.transform.rotation2D = Angle.between(obj.xy, views.globalMousePos)
+                    if (obj.xy.distanceTo(views.globalMousePos) >= 300) change(::followMouse)
+                    obj.transform.advance(-4.0)
                     frame()
                 }
+
             }
         })
     }
