@@ -16,5 +16,24 @@ class MainMyModuleScene : GameScene() {
         val obj = root.create()
         obj.attach(RectRenderer(Rectangle(0, 0, 100, 100)))
         obj.transform.localMatrix2D = Matrix().translated(20, 20)
+        obj.attach(object : Actor() {
+            override suspend fun main() {
+                change(::right)
+            }
+            suspend fun right() {
+                while (true) {
+                    if (obj.x >= 20) change(::left)
+                    obj.x++
+                    frame()
+                }
+            }
+            suspend fun left() {
+                while (true) {
+                    if (obj.x <= 0) change(::right)
+                    obj.x--
+                    frame()
+                }
+            }
+        })
     }
 }

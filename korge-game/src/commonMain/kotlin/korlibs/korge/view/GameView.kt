@@ -14,4 +14,15 @@ class GameView(context: CoroutineContext) : View() {
     override fun renderInternal(ctx: RenderContext) {
         Renderer.render(gameRoot, ctx)
     }
+
+    init {
+        addFastUpdater {
+            for (renderer in gameRoot.findComponents<Behaviour>()) {
+                if (renderer.enabled) {
+                    renderer.update(it)
+                    renderer.fixedUpdate()
+                }
+            }
+        }
+    }
 }

@@ -22,6 +22,29 @@ class Transform : Component() {
             invalidate()
         }
 
+    var matTransform
+        get() = localMatrix2D.toTransform()
+        set(value) {
+            localMatrix2D = value.toMatrix()
+        }
+
+    var x: Double
+        get() = matTransform.x
+        set(value) {
+            matTransform = matTransform.copy(x = value)
+        }
+    var y: Double
+        get() = matTransform.y
+        set(value) {
+            matTransform = matTransform.copy(y = value)
+        }
+
+    var xy: Point
+        get() = Point(matTransform.x, matTransform.y)
+        set(value) {
+            matTransform = matTransform.copy(x = value.x, y = value.y)
+        }
+
     private var _globalMatrix2DVersion: Int = -1
     private var _globalMatrix2D: Matrix = Matrix()
     val globalMatrix2D: Matrix get() {
@@ -43,3 +66,16 @@ class Transform : Component() {
         localMatrix2D = Matrix()
     }
 }
+
+var GameObject.xy: Point
+    get() = transform.xy
+    set(value) { transform.xy = value }
+
+var GameObject.x: Double
+    get() = transform.x
+    set(value) { transform.x = value }
+
+var GameObject.y: Double
+    get() = transform.y
+    set(value) { transform.y = value }
+

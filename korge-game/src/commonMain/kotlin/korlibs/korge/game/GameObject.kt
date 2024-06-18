@@ -1,6 +1,7 @@
 package korlibs.korge.game
 
 import korlibs.datastructure.*
+import korlibs.math.geom.*
 import kotlin.reflect.*
 
 class GameObject internal constructor(val root: GameRoot) : Extra {

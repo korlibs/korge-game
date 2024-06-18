@@ -2,9 +2,8 @@ package korlibs.korge.game
 
 import kotlinx.coroutines.*
 
-open class Actor : Behaviour() {
-    open suspend fun main() {
-    }
+abstract class Actor : Behaviour() {
+    abstract suspend fun main()
 
     private val frameWaiters = arrayListOf<CompletableDeferred<Unit>>()
 
@@ -19,11 +18,28 @@ open class Actor : Behaviour() {
         frameWaiters.clear()
     }
 
+    /** Changes the current action to [block]. For example `change(::right)` suspend fun right() { ... } */
+    fun change(block: suspend () -> Unit) {
+        throw ChangeAction(block)
+    }
+
+    class ChangeAction(val block: suspend () -> Unit) : Throwable()
+
     private var job: Job? = null
 
     override fun attached() {
         detached()
-        job = CoroutineScope(obj.root.coroutineContext).launch { main() }
+        job = CoroutineScope(obj.root.coroutineContext).launch {
+            var block: (suspend () -> Unit) = ::main
+            while (true) {
+                try {
+                    block()
+                    break
+                } catch (e: ChangeAction) {
+                    block = e.block
+                }
+            }
+        }
     }
 
     override fun detached() {
