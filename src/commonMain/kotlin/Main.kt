@@ -58,7 +58,10 @@ class MainMyModuleScene : GameScene() {
             suspend fun followMouse() {
                 while (true) {
                     obj.transform.rotation2D = Angle.between(obj.xy, views.globalMousePos)
-                    if (obj.xy.distanceTo(views.globalMousePos) <= 4) change(::fleeMouse)
+                    if (obj.xy.distanceTo(views.globalMousePos) <= 4) {
+                        //delay(0.25.seconds)
+                        change(::fleeMouse)
+                    }
                     obj.transform.advance(2.0)
                     frame()
                 }
@@ -66,7 +69,10 @@ class MainMyModuleScene : GameScene() {
             suspend fun fleeMouse() {
                 while (true) {
                     obj.transform.rotation2D = Angle.between(obj.xy, views.globalMousePos)
-                    if (obj.xy.distanceTo(views.globalMousePos) >= 300) change(::followMouse)
+                    if (obj.xy.distanceTo(views.globalMousePos) >= 300) {
+                        //delay(0.25.seconds)
+                        change(::followMouse)
+                    }
                     obj.transform.advance(-4.0)
                     frame()
                 }
