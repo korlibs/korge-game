@@ -6,9 +6,8 @@ import korlibs.korge.view.*
 import korlibs.math.geom.*
 
 suspend fun main() = Korge {
-    val composable = composable(10) {
-    }
-    composable.state = 20
+    //val composable = composable(10) {}
+    //composable.state = 20
     sceneContainer().changeTo({ MainMyModuleScene() })
 }
 
