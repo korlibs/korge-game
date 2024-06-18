@@ -1,3 +1,4 @@
+import korlibs.event.*
 import korlibs.korge.*
 import korlibs.korge.game.*
 import korlibs.korge.render.*
@@ -8,7 +9,16 @@ import korlibs.math.geom.*
 suspend fun main() = Korge {
     //val composable = composable(10) {}
     //composable.state = 20
+    //onEvent(ScoreUpdated) {
+    //    composable.state = it.score
+    //}
+    //views.dispatch(ScoreUpdated(20))
     sceneContainer().changeTo({ MainMyModuleScene() })
+}
+
+class ScoreUpdated(val score: Int) : Event(), TEvent<ScoreUpdated> {
+    override val type: EventType<ScoreUpdated> get() = ScoreUpdated
+    companion object : EventType<ScoreUpdated>
 }
 
 // @TODO: Mouse pick is a raytrace from camera positions
